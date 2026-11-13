@@ -49,7 +49,8 @@
 
     nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 
-    .nav-brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.5px; text-transform: uppercase; }
+    .nav-brand { display: flex; align-items: center; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.5px; text-transform: uppercase; }
+    .nav-brand img { height: 32px; width: auto; display: block; }
 
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
 
@@ -155,6 +156,8 @@
     .contact-form textarea { min-height: 160px; resize: vertical; }
     .contact-form button.btn { width: 100%; }
 
+    .turnstile-wrapper { margin-bottom: 1rem; display: flex; justify-content: center; }
+
     /* Footer */
     footer { padding: 4rem 0; text-align: center; color: var(--color-muted); font-size: 0.9rem; border-top: 1px solid var(--color-border); }
 
@@ -163,6 +166,13 @@
       section { padding: 70px 0; }
     }
   </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="assets/site.webmanifest">
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
 
@@ -170,7 +180,7 @@
 
   <nav>
     <div class="container">
-      <a href="#" class="nav-brand">BAUMI</a>
+      <a href="#" class="nav-brand"><img src="assets/Element%202.png" alt="Baumi Logo" class="nav-logo"></a>
       <div class="nav-links">
         <a href="#ueber-mich">Über mich</a>
         <a href="#angebot">Angebot</a>
@@ -247,6 +257,7 @@
           <input type="text" name="name" placeholder="Dein Name" required>
           <input type="email" name="email" placeholder="Deine E-Mail" required>
           <textarea name="message" placeholder="Was brauchst du?" required></textarea>
+          <div class="turnstile-wrapper"><div class="cf-turnstile" data-sitekey="0x4AAAAAAGAEfJca5A9j19w6"></div></div>
           <button type="submit" class="btn">Nachricht senden</button>
         </form>
         <p style="margin-top: 2rem; text-align: center;">Oder direkt schreiben: <a href="mailto:info@baumi.art">info@baumi.art</a></p>
@@ -261,5 +272,15 @@
     </div>
   </footer>
 
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    const response = turnstile.getResponse();
+    if (!response) {
+      e.preventDefault();
+      alert('Bitte löse das Turnstile-CAPTCHA, bevor du die Nachricht abschickst.');
+      return false;
+    }
+  });
+</script>
 </body>
 </html>
