@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baumi – Videografie & Fotografie</title>
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #0f0f0f;
+      --color-muted: #666666;
+      --color-accent: #d90000;
+      --color-accent-hover: #a00000;
+      --color-border: #eeeeee;
+      --color-surface: #fafafa;
+      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      --transition: 0.25s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--color-text); text-decoration: none; }
+    a:hover { color: var(--color-accent); }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      padding: 1rem 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+
+    .nav-brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.5px; text-transform: uppercase; }
+
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+
+    nav a { font-weight: 500; font-size: 0.9rem; }
+
+    /* Skip-Link für Barrierefreiheit */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      background: var(--color-accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero img.logo { max-width: 220px; margin-bottom: 2.5rem; filter: grayscale(20%) contrast(1.05); transition: var(--transition); }
+    .hero img.logo:hover { filter: grayscale(0%); }
+
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; line-height: 1.1; }
+
+    .hero p { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--color-muted); max-width: 600px; margin-bottom: 2.5rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-text);
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: var(--color-accent); color: #fff; transform: translateY(-1px); }
+
+    /* Sections */
+    section { padding: 100px 0; }
+    section h2 { font-size: 2rem; margin-bottom: 3rem; text-align: center; font-weight: 700; letter-spacing: -0.5px; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .about-image {
+      aspect-ratio: 1;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: var(--color-muted);
+      overflow: hidden;
+    }
+    .about-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Services */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+    .service-card { padding: 2rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: #fff; transition: var(--transition); }
+    .service-card:hover { border-color: var(--color-accent); box-shadow: var(--shadow); transform: translateY(-4px); }
+    .service-card h3 { margin-bottom: 1rem; font-size: 1.15rem; }
+
+    /* Portfolio */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .portfolio-item {
+      aspect-ratio: 1;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: var(--color-muted);
+      transition: var(--transition);
+      overflow: hidden;
+      position: relative;
+    }
+    .portfolio-item:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow); background: #fff; }
+    .portfolio-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Contact */
+    .contact-form { max-width: 560px; margin: 0 auto; }
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: 1rem; margin-bottom: 1rem;
+      border: 1px solid var(--color-border); background: #fff; font-size: 1rem;
+      border-radius: var(--radius); font-family: inherit;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { outline: 2px solid var(--color-accent); border-color: transparent; }
+    .contact-form textarea { min-height: 160px; resize: vertical; }
+    .contact-form button.btn { width: 100%; }
+
+.recaptcha-wrapper { margin-bottom: 1rem; display: flex; justify-content: center; }
+.g-recaptcha { transform: scale(0.92); transform-origin: 0 0; }
+
+    /* Footer */
+    footer { padding: 4rem 0; text-align: center; color: var(--color-muted); font-size: 0.9rem; border-top: 1px solid var(--color-border); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      section { padding: 70px 0; }
+    }
+  </style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Inhalt überspringen</a>
+
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-brand">BAUMI</a>
+      <div class="nav-links">
+        <a href="#ueber-mich">Über mich</a>
+        <a href="#angebot">Angebot</a>
+        <a href="#arbeiten">Arbeiten</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <section class="hero">
+      <img src="assets/Element 2.png" alt="Baumi Logo" class="logo">
+      <h1>Videografie, die bewegt.</h1>
+      <p>Authentische Videos & Fotos für Fitness-Marken und regionale Unternehmen in Karlsruhe und Baden-Baden.</p>
+      <a href="#kontakt" class="btn">Kontakt aufnehmen</a>
+    </section>
+
+    <section id="ueber-mich">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <h2>Über mich</h2>
+            <p>Ich bin Dennis Baumstark, bekannt als Baumi. Geboren 2000, lebe in Muggensturm und bin seit Anfang 2024 selbstständig als Videograf – eine One-Man-Show ohne Agentur-Overhead.</p>
+            <p>Mein Weg führte mich vom Groß- und Außenhandel über ein Mercedes-Autohaus in Baden-Baden direkt zur Kamera. Heute erstelle ich Short Form Content für Social Media, Long Form Videos und Fotografie für Fitness-Marken und regionale Unternehmen.</p>
+            <p>Was mich ausmacht: ruhig, ausgeglichen, sportlich (Marathon, Radfahren, Krafttraining). Kein AI Slop, keine Massenproduktion. Stattdessen persönlich, hochwertig und auf Augenhöhe.</p>
+          </div>
+          <div>
+            <div class="about-image">
+              <!-- Hier kommt ein Foto von Dennis rein -->
+              Foto von Dennis
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="angebot">
+      <div class="container">
+        <h2>Angebot</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <h3>Einzelprojekte</h3>
+            <p>Videografie & Fotografie von der Planung bis zum Schnitt. Für Imagefilme, Event-Recaps und Dokumentationen.</p>
+          </div>
+          <div class="service-card">
+            <h3>Retainer-Modell</h3>
+            <p>Monatliche Zusammenarbeit für kontinuierlichen Social-Media-Content. Ideal für Marken, die regelmäßig brauchen.</p>
+          </div>
+          <div class="service-card">
+            <h3>Formate</h3>
+            <p>Short Form (Instagram, TikTok, YouTube Shorts), Long Form Videos und Fotografie.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="arbeiten">
+      <div class="container">
+        <h2>Arbeiten & Referenzen</h2>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">Projekt 1 – Fitness</div>
+          <div class="portfolio-item">Projekt 2 – Event</div>
+          <div class="portfolio-item">Projekt 3 – Imagefilm</div>
+          <div class="portfolio-item">Projekt 4 – Fotografie</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="container">
+        <h2>Kontakt</h2>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/deine-form-id" method="POST" novalidate>
+          <input type="text" name="name" placeholder="Dein Name" required>
+          <input type="email" name="email" placeholder="Deine E-Mail" required>
+          <input type="text" name="unternehmen" placeholder="Unternehmen (optional)">
+          <textarea name="message" placeholder="Was brauchst du?" required></textarea>
+          <div class="recaptcha-wrapper"><div class="g-recaptcha" data-sitekey="6Lc4hR4uAAAAAOXqxRt3Q-Sl38EKapTqzZyzAc53"></div></div>
+          <button type="submit" class="btn">Nachricht senden</button>
+        </form>
+        <p style="margin-top: 2rem; text-align: center;">Oder direkt schreiben: <a href="mailto:info@baumi.art">info@baumi.art</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Baumi – Dennis Baumstark. Minimalistische Videografie aus Muggensturm.</p>
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    if (typeof grecaptcha === 'undefined' || !grecaptcha.getResponse()) {
+      e.preventDefault();
+      alert('Bitte bestätige das reCAPTCHA, bevor du die Nachricht abschickst.');
+      return false;
+    }
+  });
+</script>
+</body>
+</html>
